@@ -35,7 +35,7 @@ export class AuthGmail {
         return email.toLowerCase().endsWith("@gmail.com");
     }
 
-    public getValue(): string {
+    get value(): string {
         return this.email;
     }
 }

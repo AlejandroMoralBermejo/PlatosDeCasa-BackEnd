@@ -24,7 +24,7 @@ export class AuthRol{
     }
 
 
-    public getValue(){
+    get value(){
         return this.rol
     }
 } 

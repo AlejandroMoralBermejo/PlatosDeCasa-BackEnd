@@ -1,14 +1,14 @@
-import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, Unique } from 'typeorm';
 
 @Entity('auth-users')
 export class AuthUserTypeOrmEntity{
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn('uuid')
     id:string
 
-    @Column()
+    @Column({ unique: true})
     name: string
 
-    @Column()
+    @Column({ unique: true})
     gmail: string
 
     @Column()

@@ -39,7 +39,7 @@ export class AuthPassword {
 
   }
 
-  get(){
+  get value(){
     return this.password
   }
 
@@ -73,7 +73,7 @@ export class AuthPassword {
   }
 
   public static async compare(plain: string, hashed: AuthPassword): Promise<boolean> {
-    return bcrypt.compare(plain, hashed.get());
+    return bcrypt.compare(plain, hashed.value);
   }
 
 }
