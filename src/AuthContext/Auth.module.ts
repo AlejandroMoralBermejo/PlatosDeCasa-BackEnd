@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule, getRepositoryToken } from '@nestjs/typeorm';
-
+import { UserRepository } from './infrastructure/repositories/user.repository';
 import { CommandHandlers } from './application/commands/handlers/command-handler';
+import { PassportModule } from '@nestjs/passport';
+import { AuthController } from './infrastructure/controller/auth.controller';
 
 
 
@@ -9,12 +11,11 @@ import { CommandHandlers } from './application/commands/handlers/command-handler
   imports: [
     TypeOrmModule.forFeature([])
   ],
-//  controllers: [AuthController],
+  controllers: [AuthController],
   providers: [
-//    UserRepository,
+    UserRepository,
     ...CommandHandlers,
-//    JwtStrategy
   ],
-//  exports: [UserRepository, PassportModule],
+  exports: [UserRepository, PassportModule],
 })
 export class AuthModule {}
