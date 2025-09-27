@@ -9,7 +9,8 @@ import { AuthController } from './infrastructure/controller/auth.controller';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([])
+    TypeOrmModule.forFeature([]),
+    PassportModule.register({ defaultStrategy: 'jwt' })
   ],
   controllers: [AuthController],
   providers: [

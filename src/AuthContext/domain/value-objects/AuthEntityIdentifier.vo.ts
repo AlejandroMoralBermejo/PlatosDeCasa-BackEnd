@@ -3,7 +3,7 @@ import { v4 as uuidv4, validate as uuidValidate, version as uuidVersion } from '
 export class AuthEntityIdentifier {
     public readonly id: string;
 
-    constructor(id: string){
+    constructor(id?: string){
         if(!id){
             this.id = uuidv4()
         }else{

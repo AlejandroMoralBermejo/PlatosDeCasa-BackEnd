@@ -76,4 +76,8 @@ export class AuthPassword {
     return bcrypt.compare(plain, hashed.value);
   }
 
+  public async compare(plain: string): Promise<boolean>{
+    return bcrypt.compare(plain, this.password)
+  }
+
 }
