@@ -3,18 +3,19 @@ import * as bcrypt from 'bcrypt';
 export class AuthPassword {
   private readonly password: string;
 
-  constructor(password: string) {
+  constructor(password: string, isHashed: boolean) {
     
-    this.password = this.validatePassword(password);
+    if(isHashed){
+      this.password = password
+    }else{
+      this.password = this.validatePassword(password);
+    }
+
   }
 
   private validatePassword(password: string){
     if (!password) {
       throw new Error("Password cannot be empty");
-    }
-
-    if (!this.hasValidLength(password)) {
-      throw new Error("Password must be between 8 and 32 characters");
     }
 
     if (!this.hasUppercase(password)) {
@@ -44,10 +45,6 @@ export class AuthPassword {
   }
 
   /* Validaciones de la contraseña */
-
-  private hasValidLength(password: string): boolean {
-    return password.length >= 8 && password.length <= 32;
-  }
 
   private hasUppercase(password: string): boolean {
     return /[A-Z]/.test(password);

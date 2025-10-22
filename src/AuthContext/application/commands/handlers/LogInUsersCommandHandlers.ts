@@ -19,8 +19,8 @@ export class LogInUserCOmmandHandler implements ICommandHandler<LoginUserCommand
             throw new BadRequestException('The password is incorrect')
         }
 
-        const token = this.tokenFactory.createAuthToken(user.id)
+        const token = this.tokenFactory.createAuthToken(user)
 
-        return token
+        return token.getToken()
     }
 }

@@ -12,7 +12,7 @@ export class AuthUserEntity{
         public rol: AuthRol,
         public name: string,
     ){
-        if(!name){throw new Error('Name cannot be empty')}
+        this.name = this.validateName(name)
     }
 
     public comparePassword(passwordToCompare: string){
@@ -28,7 +28,7 @@ export class AuthUserEntity{
 
     public changePassword(newPassword: string){
         if(!newPassword){throw new Error('New Password cannot be empty')}
-        this.password = new AuthPassword(newPassword)
+        this.password = new AuthPassword(newPassword, false)
     }
 
     public changeRol(newRol: string){
@@ -37,9 +37,19 @@ export class AuthUserEntity{
     }
 
     public changeName(newName: string){
-        if(!newName){throw new Error('New Name cannot be empty')}
-        this.name = newName
+        this.name = this.validateName(newName)
     }
 
+    private validateName(name: string){
+        if(!name){
+            throw new Error('Name cannot be empty')
+        }
+        const trimmedName = name.trim()
+        if(!trimmedName){
+            throw new Error('Name cannot be empty')
+        }
+
+        return trimmedName
+    }
 
 }

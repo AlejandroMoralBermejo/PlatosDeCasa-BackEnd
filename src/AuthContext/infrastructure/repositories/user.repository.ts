@@ -20,7 +20,7 @@ export class UserRepository implements AuthUserPort {
         return new AuthUserEntity(
                 new AuthEntityIdentifier(user.id),
                 new AuthGmail(user.gmail),
-                new AuthPassword(user.hashedPassword),
+                new AuthPassword(user.hashedPassword, true),
                 new AuthRol(user.rol),
                 user.name
             )
@@ -40,6 +40,12 @@ export class UserRepository implements AuthUserPort {
     async save(user: AuthUserEntity): Promise<AuthUserEntity> {
         const record = this.parseToInfrastructure(user)
         await this.repo.save(record);
+        return user
+    }
+
+    async update(user: AuthUserEntity): Promise<AuthUserEntity> {
+        const record = this.parseToInfrastructure(user)
+        await this.repo.save(record)
         return user
     }
 
@@ -79,6 +85,17 @@ export class UserRepository implements AuthUserPort {
         return this.parseToDomain(row)
     }
 
+    async findByGmailOrNull(userGmail: string): Promise<AuthUserEntity | null> {
+        const row = await this.repo.findOne({
+            where: { gmail: userGmail }
+        })
+
+        if(!row){
+            return null
+        }
+
+        return this.parseToDomain(row)
+    }
 
     async delete(userId: string): Promise<{ message: string; }> {
 
@@ -93,4 +110,3 @@ export class UserRepository implements AuthUserPort {
     }
    
 }
-

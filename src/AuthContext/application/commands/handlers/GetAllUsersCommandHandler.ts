@@ -13,6 +13,11 @@ export class GetAllUsersCommandHandler implements ICommandHandler<GetAllUsersCom
     async execute(command: GetAllUsersCommand): Promise<any> {
         const users = await this.repo.findAll()
 
-        return users
+        return users.map(user => ({
+            id: user.id.value,
+            gmail: user.gmail.value,
+            name: user.name,
+            rol: user.rol.value
+        }))
     }
 }

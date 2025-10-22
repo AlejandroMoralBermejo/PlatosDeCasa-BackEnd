@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { RegisterUserCommand } from '../RegisterUserCommand';
 import { UserRepository } from 'src/AuthContext/infrastructure/repositories/user.repository';
@@ -17,9 +17,14 @@ export class RegisterUserCommandHandler implements ICommandHandler<RegisterUserC
     ){}
 
     async execute(command: RegisterUserCommand): Promise<any> {
+        const existingUser = await this.repo.findByGmailOrNull(command.gmail)
+        if(existingUser){
+            throw new BadRequestException('Gmail already registered')
+        }
+
         const id = new AuthEntityIdentifier()
         const gmail = new AuthGmail(command.gmail)
-        const password = new AuthPassword(command.password)
+        const password = new AuthPassword(command.password, false)
         const rol = new AuthRol("user")
 
         const newUser = new AuthUserEntity(
@@ -30,8 +35,13 @@ export class RegisterUserCommandHandler implements ICommandHandler<RegisterUserC
             command.name
         )
 
-        const response = await this.repo.save(newUser)
+        await this.repo.save(newUser)
 
-        return response
+        return {
+            id: newUser.id.value,
+            gmail: newUser.gmail.value,
+            name: newUser.name,
+            rol: newUser.rol.value
+        }
     }
 }

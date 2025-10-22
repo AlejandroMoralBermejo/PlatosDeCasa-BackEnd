@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, Unique } from 'typeorm';
 
-@Entity('auth-users')
+@Entity('auth_users')
 export class AuthUserTypeOrmEntity{
     @PrimaryGeneratedColumn('uuid')
     id:string
