@@ -7,6 +7,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './AuthContext/Auth.module';
 import { AuthUserTypeOrmEntity } from './AuthContext/infrastructure/entities/auth-user.typeorm-entity';
+import { RecipeTypeOrmEntity } from './RecipeContext/infrastructure/entities/recipe.typeorm-entity';
+import { RecipeModule } from './RecipeContext/Recipe.module';
 
 
 @Module({
@@ -24,7 +26,8 @@ import { AuthUserTypeOrmEntity } from './AuthContext/infrastructure/entities/aut
       synchronize: true,
       migrationsRun: true,  
       entities: [
-        AuthUserTypeOrmEntity
+        AuthUserTypeOrmEntity,
+        RecipeTypeOrmEntity,
       ],
       logging: true,
       logger: 'advanced-console',
@@ -47,7 +50,8 @@ import { AuthUserTypeOrmEntity } from './AuthContext/infrastructure/entities/aut
         },
       }),
     }),
-    AuthModule
+    AuthModule,
+    RecipeModule
   ],
   controllers: [AppController],
   providers: [AppService],
